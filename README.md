@@ -2,6 +2,19 @@
 
 Bugi Video Downloader is a powerful and simple browser extension that automatically detects media (video/audio) files on websites and allows you to download them. It specifically helps you detect and download videos in **HLS (m3u8)** and **MP4** formats.
 
+## Screenshots 📸
+<p float="left">
+  <img src="screenshots/Screenshot_1.png" width="300" />
+  <img src="screenshots/Screenshot_2.png" width="300" />
+  <img src="screenshots/Screenshot_3.png" width="300" />
+  <img src="screenshots/Screenshot_4.png" width="300" />
+  <img src="screenshots/Screenshot_5.png" width="300" />
+  <img src="screenshots/Screenshot_6.png" width="300" />
+  <img src="screenshots/Screenshot_7.png" width="300" />
+  <img src="screenshots/Screenshot_9.png" width="300" />
+  <img src="screenshots/Screenshot_10.png" width="300" />
+</p>
+
 ## Features ✨
 - **Automatic Detection:** Automatically detects media files being played or loaded on the web pages you visit in the background.
 - **HLS and MP4 Support:** Can download segmented (HLS/m3u8) streams and merge them into a single file. Also supports standard MP4 files.
@@ -28,10 +41,11 @@ You can currently install this extension in developer mode (as an unpacked exten
 
 ## How to Use 🚀
 1. Go to a website and play the video you want to download.
-2. A small red/green notification dot on the extension icon indicates that a video has been detected on the page.
-3. Click the extension icon to see the list of detected videos.
-4. Click the **"Download"** button next to a video to add it to the download manager.
-5. You can monitor the progress of your download from the Download Manager page.
+2. **On-page Download Button:** If a video is detected, a download button will automatically appear in the top-left corner of the video player itself. You don't have to use the popup menu to download!
+3. Alternatively, a small red/green notification dot on the extension icon indicates that a video has been detected on the page. Click the icon to see the list of detected videos.
+4. **Quality Options:** If the detected video source is marked with a **yellow** badge, multiple quality options are available to choose from. If it is not yellow, it means only a single quality is available for that video.
+5. Click the **"Download"** button next to a video (or use the on-page button) to add it to the download manager.
+6. You can monitor the progress of your download from the Download Manager page.
 
 ## Disclaimer ⚠️
 This extension is designed solely for users to download free or permitted content for personal use, without violating copyright laws. Downloading and distributing copyrighted material without permission is illegal. Users are solely responsible for the content they download using this tool.
