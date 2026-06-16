@@ -1,0 +1,32 @@
+{
+  "bugiJsonImportProfile": 2,
+  "id": "anizium",
+  "label": "Anizium API export",
+  "match": {
+    "rootType": "object",
+    "requiredKeys": ["episodes"]
+  },
+  "extract": {
+    "mode": "nestedEpisodes",
+    "episodesPath": "episodes",
+    "episode": {
+      "seasonKey": "season",
+      "episodeKey": "episode",
+      "titleKey": "title"
+    },
+    "sources": {
+      "containersPath": "groups",
+      "languageFromKey": "group",
+      "languageLabelKey": "name",
+      "variantsPath": "items",
+      "urlKey": "link",
+      "qualityKey": "quality"
+    },
+    "subtitles": {
+      "listPath": "subtitles",
+      "groupKey": "group",
+      "nameKey": "name",
+      "linkKey": "link"
+    }
+  }
+}

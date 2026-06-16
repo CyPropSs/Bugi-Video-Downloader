@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="pv.pageTitle">Preview</title>
+    <style>
+        body { margin: 0; background: #111; color: #eee; font: 12px system-ui, "Segoe UI", sans-serif; }
+        #pvWrap { padding: 8px; box-sizing: border-box; }
+        .videoEl { width: 100%; max-height: 340px; background: #000; border-radius: 6px; }
+        #pvSeek { width: 100%; margin: 8px 0; cursor: pointer; }
+        #pvTime { font-size: 11px; color: #9e9e9e; margin-bottom: 6px; }
+        #pvMeta {
+            color: #bdbdbd; font-size: 11px; line-height: 1.45;
+            white-space: pre-wrap; word-break: break-word;
+            max-height: 140px; overflow: auto;
+            background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 8px;
+        }
+        #pvErr { color: #ef5350; margin-top: 8px; font-size: 11px; }
+        #pvVttBlock { display: none; }
+        #pvVttMeta { font-size: 11px; color: #9e9e9e; margin-bottom: 8px; line-height: 1.4; }
+        #pvVttText {
+            margin: 0; padding: 10px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px;
+            font: 12px/1.45 ui-monospace, Consolas, monospace; color: #e0e0e0;
+            white-space: pre-wrap; word-break: break-word;
+            max-height: 360px; overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="pvWrap">
+        <div id="pvVideoBlock">
+            <video id="pvVideo" class="videoEl" controls playsinline crossorigin="anonymous"></video>
+            <input type="range" id="pvSeek" min="0" max="1000" value="0" />
+            <div id="pvTime">00:00 / 00:00</div>
+        </div>
+        <div id="pvVttBlock">
+            <div id="pvVttMeta"></div>
+            <pre id="pvVttText"></pre>
+        </div>
+        <div id="pvErr"></div>
+    </div>
+    <script src="i18n.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        void (async function () {
+            try {
+                if (typeof BugiI18n !== "undefined" && BugiI18n.initFromStorage) {
+                    await BugiI18n.initFromStorage();
+                    if (BugiI18n.applyDom) BugiI18n.applyDom(document.documentElement);
+                }
+            } catch (_e) {}
+        })();
+    });
+    </script>
+    <script src="lib/hls.min.js"></script>
+    <script src="preview.js"></script>
+</body>
+</html>

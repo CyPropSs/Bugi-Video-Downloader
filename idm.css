@@ -1,0 +1,183 @@
+ .idm-btn-group { position: absolute !important; z-index: 2147483647 !important; display: flex; font-family: Arial, sans-serif; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); opacity: 0.9; transition: opacity 0.3s; background: transparent; }
+ .idm-btn-group:hover { opacity: 1 !important; }
+ .idm-main-btn { background: #d32f2f; color: white; padding: 6px 12px; border: 1px solid #fff; border-right: none; border-radius: 4px 0 0 4px; font-weight: bold; cursor: pointer; font-size: 11px; height: 28px; }
+ .idm-close-btn { background: #b71c1c; color: white; padding: 6px 8px; border: 1px solid #fff; border-left: 1px solid #ffcdd2; border-radius: 0 4px 4px 0; font-weight: bold; cursor: pointer; font-size: 11px; height: 28px; }
+.idm-window {
+  position: fixed;
+  width: 320px;
+  background-color: #222;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  z-index: 2147483647;
+  border: 1px solid #444;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.idm-window, .idm-window * { box-sizing: border-box; }
+.idm-window div,
+.idm-window span,
+.idm-window label,
+.idm-window input,
+.idm-window button {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+ .idm-window-header { background: #333; padding: 8px 10px; cursor: move; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; height: 35px; }
+ .idm-window-title { font-size: 13px; font-weight: bold; color: #eee; }
+.idm-window-body {
+  padding: 15px;
+  max-height: calc(100vh - 80px); /* üst+alt toplam 80px boşluk */
+  overflow-y: auto;
+  background: #222 !important;
+  scrollbar-width: thin;
+  scrollbar-color: #de1212 #222;
+}
+.idm-window-body::-webkit-scrollbar {
+  width: 8px;
+}
+.idm-window-body::-webkit-scrollbar-track {
+  background: #222;
+}
+.idm-window-body::-webkit-scrollbar-thumb {
+  background: #de1212;
+  border-radius: 4px;
+}
+.idm-win-btn {
+  all: unset;
+  box-sizing: border-box;
+  color: #aaa !important;
+  cursor: pointer;
+  font-size: 16px !important;
+  padding: 0 6px;
+}
+.idm-win-btn:hover { color: #fff !important; }
+ .idm-window.minimized { width: auto !important; height: auto !important; background: rgba(0,0,0,0.8); border-radius: 20px; transform: none !important; }
+ .idm-window.minimized .idm-window-body { display: none; }
+ .idm-window.minimized .idm-window-header { background: transparent; border: none; padding: 5px 15px; }
+.idm-list-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 5px 0;
+  background: linear-gradient(180deg, #3a3a3a, #222) !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+.idm-list-btn:hover {
+  background: linear-gradient(180deg, #4a4a4a, #222) !important;
+  border-color: #777 !important;
+}
+.idm-action-btn {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #43a047, #1b5e20) !important;
+  color: #fff !important;
+  border: 1px solid #1b5e20 !important;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+.idm-stats-container { background: rgba(0,0,0,0.3) !important; border-radius: 4px; padding: 6px; margin: 8px 0; border: 1px solid #444 !important; font-size: 11px; }
+ .idm-stat-item { display: inline-block; margin: 0 8px; }
+ .idm-stat-label { color: #aaa; margin-right: 4px; }
+ .idm-stat-value { font-weight: bold; }
+ .idm-speed-control { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: #888; flex-wrap: wrap; gap: 10px; }
+ .idm-active-val { color: #2ecc71; font-weight: bold; }
+ .idm-speed-val { color: #4fc3f7; font-weight: bold; }
+.idm-time-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333 !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.idm-time-wrapper:focus-within {
+  border-color: #28a745 !important;
+  background: #2a2a2a !important;
+}
+.idm-time-input {
+  all: unset;
+  box-sizing: border-box;
+  width: 26px;
+  text-align: center;
+  color: #fff !important;
+  font-family: monospace !important;
+  font-size: 16px !important;
+  line-height: 1.2 !important;
+  padding: 0;
+  margin: 0 1px;
+  background: transparent !important;
+}
+ .idm-time-input::selection { background: #555; }
+ .idm-time-colon { color: #aaa; margin: 0 2px; font-weight: bold; user-select: none; }
+
+/* İndir + önizle yan yana: dikey margin satırda; göz butonunda line-height/SVG boşluğu yok */
+.idm-window .idm-btn-row {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+.idm-window .idm-btn-row--mb4 {
+  margin-bottom: 4px;
+}
+.idm-window .idm-btn-row--mb0 {
+  margin-bottom: 0;
+}
+.idm-window .idm-btn-row--gap6 {
+  gap: 6px;
+}
+.idm-window .idm-btn-row--mt6 {
+  margin-top: 6px;
+}
+.idm-window .idm-btn-row > .idm-list-btn,
+.idm-window .idm-btn-row > .idm-action-btn {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.idm-window .idm-preview-eye {
+  flex: 0 0 44px;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  padding: 10px 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 0 !important;
+  text-align: center;
+}
+.idm-window .idm-preview-eye--action {
+  flex: 0 0 46px;
+  width: 46px;
+  min-width: 46px;
+  max-width: 46px;
+}
+.idm-window .idm-preview-eye svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}

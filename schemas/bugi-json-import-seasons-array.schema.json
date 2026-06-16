@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bugi-local/schemas/bugi-json-import-seasons-array.schema.json",
+  "title": "Bugi JSON içe aktarma — sezon dizisi",
+  "description": "Kök dizi; sezon → episodes → streams. x-bugi-extract alan adlarını taşır.",
+  "type": "array",
+  "x-bugi-extract": {
+    "mode": "seasonsArray",
+    "firstItemRequiredKeys": ["episodes"],
+    "seasonNumberKey": "season",
+    "episodesPath": "episodes",
+    "episodeNumberKey": "episode",
+    "streamsPath": "streams",
+    "streamUrlKey": "url",
+    "streamLanguageKey": "language",
+    "streamResolutionKey": "resolution"
+  },
+  "minItems": 1,
+  "items": { "$ref": "#/definitions/season" },
+  "definitions": {
+    "stream": {
+      "type": "object",
+      "description": "Tek video akışı adayı.",
+      "required": ["url"],
+      "additionalProperties": true,
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "HLS veya doğrudan medya URL'si."
+        },
+        "language": { "type": "string", "description": "original/orijinal tercih edilir." },
+        "resolution": { "type": "string", "description": "Örn. 1080p (iç ayrıştırma)." }
+      }
+    },
+    "simpleEpisode": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "episode": { "type": ["integer", "string"] },
+        "streams": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/stream" }
+        }
+      }
+    },
+    "season": {
+      "type": "object",
+      "required": ["episodes"],
+      "additionalProperties": true,
+      "properties": {
+        "season": { "type": ["integer", "string"], "description": "Yoksa dizi indeksi+1 kullanılır." },
+        "episodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/simpleEpisode" }
+        }
+      }
+    }
+  }
+}

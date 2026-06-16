@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bugi-local/schemas/bugi-json-import-root.schema.json",
+  "title": "Bugi İndirme Yöneticisi — JSON içe aktarma (tüm yerleşik formatlar)",
+  "description": "Sürükle-bırak / yapıştır ile kabul edilen veri: ya kök nesne+episodes (gelişmiş) ya da kök dizi (sezonlar). Özel adapter'lar bu şemaya dahil değildir.",
+  "oneOf": [
+    { "$ref": "bugi-json-import-advanced-episodes.schema.json" },
+    { "$ref": "bugi-json-import-seasons-array.schema.json" }
+  ]
+}

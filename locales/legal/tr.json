@@ -1,0 +1,76 @@
+{
+  "terms": {
+    "documentTitle": "Bugi Video Downloader — Kullanım Koşulları",
+    "h1": "Bugi Video Downloader — Kullanım Koşulları",
+    "effective": "Yürürlük tarihi: 1 Mayıs 2026",
+    "sections": [
+      {
+        "title": "1. Genel şartlar",
+        "html": "<p>Bu eklentiyi yükleyen ve kullanan her kullanıcı, bu metindeki koşulları okumuş ve kabul etmiş sayılır. Koşulları kabul etmiyorsanız eklentiyi kullanmamanız ve kaldırmanız gerekir.</p>"
+      },
+      {
+        "title": "2. Yasal kullanım yükümlülüğü",
+        "html": "<ul><li>Eklenti yalnızca yasal kullanım amacıyla sunulur.</li><li>Kullanıcı, yalnızca indirme hakkı bulunduğu içerikleri indirebilir.</li><li>Telif hakları, lisanslar, platform kuralları ve yerel mevzuata uyum tamamen kullanıcının sorumluluğundadır.</li></ul>"
+      },
+      {
+        "title": "3. Yasaklı kullanım",
+        "html": "<ul><li>Yetkisiz içerik indirme, dağıtma veya ticari kullanım.</li><li>Telif hakkı ihlali oluşturacak şekilde eklenti kullanımı.</li><li>Platform güvenlik mekanizmalarını aşmaya yönelik kötüye kullanım.</li></ul>"
+      },
+      {
+        "title": "4. Sorumluluk reddi",
+        "html": "<p>Eklenti <strong>olduğu gibi</strong> sunulur. Geliştirici; kesintisiz çalışma, tüm sitelerde uyumluluk, belirli bir amaca uygunluk veya hatasızlık garantisi vermez.</p><p>Kullanımınızdan doğabilecek telif iddiaları, hesap kısıtlamaları, veri kaybı, gelir kaybı, dolaylı veya doğrudan zararlar dahil tüm sonuçlar kullanıcının sorumluluğundadır.</p>"
+      },
+      {
+        "title": "5. Üçüncü taraf hizmetler",
+        "html": "<p>Eklenti üçüncü taraf web siteleriyle etkileşime girebilir. Bu sitelerin içeriği, teknik değişiklikleri veya kuralları geliştiricinin kontrolünde değildir.</p>"
+      },
+      {
+        "title": "6. Çerezler ve isteğe bağlı hata bildirimi",
+        "html": "<p>Eklentide yer alan isteğe bağlı hata bildirimi; açıklama ve teknik günlük özetinin geliştirici tarafından belirlenen bir sunucuya (HTTPS) iletilmesi ile çalışabilir.</p><p>Ayarlar menüsünde ilgili seçenek açıkken, uygun olan durumlarda aktif sekme bağlamında tarayıcıda saklanan <strong>çerezlere ilişkin ad ve değerler</strong> rapor özeti ile birlikte yer alabilir. Çerezler oturum, kimlik doğrulama veya içeriğe erişimle ilgili hassas bilgiler içerebilir.</p><ul><li>Rapor gönderimi tamamen kullanıcının seçimindedir.</li><li>Raporda çerez dahil etmeyi kapatarak çerezleri göndermeyi durdurabilirsiniz.</li><li>Çerez içeriği veya tanı verisinin üçüncü taraflarca yanlış kullanımı dahil tüm risk kullanıcıya aittir; bu kapsamı açık olarak kabul ediyorsanız bildirimi göndermelisiniz.</li></ul>"
+      },
+      {
+        "title": "7. Koşulların güncellenmesi",
+        "html": "<p>Geliştirici, kullanım koşullarını güncelleme hakkını saklı tutar. Güncel koşullar yürürlüğe girdiğinde eklenti içinde yeniden onay istenebilir.</p>"
+      },
+      {
+        "title": "8. Kabul beyanı",
+        "html": "<p>Bu eklentiyi kullanarak, yukarıdaki koşulları okuduğunuzu, anladığınız ve kabul ettiğinizi beyan edersiniz.</p>"
+      }
+    ]
+  },
+  "privacy": {
+    "documentTitle": "Bugi Video Downloader — Gizlilik Politikası",
+    "h1": "Bugi Video Downloader — Gizlilik Politikası",
+    "effective": "Yürürlük tarihi: 1 Mayıs 2026",
+    "sections": [
+      {
+        "title": "1. Toplanan veriler",
+        "html": "<p>Eklenti, işlevlerini yerine getirmek için cihazınızda yerel olarak aşağıdaki verileri saklayabilir:</p><ul><li>Tercihler (ayarlar, engelli site listesi, bildirim sesi seçimleri, hata raporunda çerez dahil seçeneği)</li><li>İndirme iş listesi ve ilgili teknik meta veriler</li><li>Hata ayıklama / günlük kayıtları (yalnızca etkinleştirildiğinde)</li><li>Kullanım koşulları kabul durumu</li><li>İsteğe bağlı hata bildiriminde yazdığınız açıklama; oluşturulan teknik özet rapor (sekme adresi, tespit edilen medya URL özetleri vb.) ve seçenek açıksa <strong>çerez ad/değer listesi</strong></li></ul>"
+      },
+      {
+        "title": "2. Veri saklama yeri",
+        "html": "<p>Tercihler ve indirme durumu gibi veriler tarayıcının eklenti depolama alanında (yerel storage) tutulur.</p><p>Eklenti, arka planda otomatik olarak kişisel veri veya çerez listesi toplayıp sunucuya göndermez. Harici bir adrese veri aktarımı yalnızca siz <strong>hata bildir</strong> akışını başlattığınızda ve istek gönderildiğinde gerçekleşir.</p>"
+      },
+      {
+        "title": "3. Çerezler ve Chrome çerez izni",
+        "html": "<p>Eklenti manifestinde <strong>çerezler (cookies)</strong> izni bulunabilir. Bu izin, yalnızca siz hata raporu gönderdiğinizde ve ayarlarda rapora çerez dahil etme açık olduğunda, ilgili web sitesi URL bağlamında tarayıcının çerez API aracılığıyla okunan çerez dizilerinin rapor yüküne eklenmesi için kullanılır.</p><p>Çerezler; oturum, giriş kimliği, tercih veya güvenlikle ilgili bilgileri içerebilir. Bunları rapora eklemeyi kapatarak yalnızca açıklama ve çerezsiz teknik özet gönderebilirsiniz.</p><p>Çerez içeriği ve rapor gövdesi HTTPS ile hata bildirim uç noktasına iletilir. Alıcı sistemde saklama süresi, erişim ve güvenlik uygulamaları o hizmetin işleteni tarafından belirlenir.</p>"
+      },
+      {
+        "title": "4. Ağ işletimi",
+        "html": "<p>Eklenti, kullanıcının tetiklediği indirme akışı, isteğe bağlı hata raporu ve güncelleme kontrolü kapsamında ağ istekleri yapabilir. Bu istekler teknik olarak ilgili hedef sunucular tarafından kayıt altına alınabilir.</p>"
+      },
+      {
+        "title": "5. Üçüncü taraf siteler",
+        "html": "<p>Üçüncü taraf sitelerdeki veri işleme uygulamaları bu politikanın dışındadır. Kullanıcı, ilgili sitelerin gizlilik şartlarını ayrıca incelemelidir.</p>"
+      },
+      {
+        "title": "6. Veri güvenliği",
+        "html": "<p>Geliştirici makul teknik tedbirleri hedefler; ancak internet ve yazılım ekosistemlerinde mutlak güvenlik garanti edilemez.</p>"
+      },
+      {
+        "title": "7. Politika güncellemeleri",
+        "html": "<p>Gizlilik politikası zaman zaman güncellenebilir. Güncel sürüm eklenti içinde yayımlanır.</p>"
+      }
+    ]
+  }
+}

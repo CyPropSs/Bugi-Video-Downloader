@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --bg-deep: #0f1115;
+            --bg-panel: #181b21;
+            --bg-card: #1f232d;
+            --border: rgba(255,255,255,0.08);
+            --text: #e8eaef;
+            --muted: #8b929e;
+            --accent: #e53935;
+            --accent-dim: #c62828;
+            --ok: #66bb6a;
+            --danger: #ef5350;
+            --pill-on: rgba(229,57,53,0.25);
+            --radius: 10px;
+        }
+
+        * { box-sizing: border-box; }
+        html {
+            color-scheme: dark;
+        }
+        html, body {
+            margin: 0;
+            width: 360px;
+            min-height: 400px;
+            background: var(--bg-deep);
+            color: var(--text);
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            font-size: 13px;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .popup-shell {
+            padding: 12px 12px 10px;
+            position: relative;
+        }
+
+        .popup-header {
+            margin-bottom: 10px;
+        }
+        .popup-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .popup-brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin: 0;
+            min-width: 0;
+            flex: 1;
+        }
+        .popup-brand .brand-accent {
+            color: var(--accent);
+        }
+
+        .popup-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 4px;
+            background: var(--bg-panel);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .popup-tab {
+            flex: 1;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .popup-tab:hover { color: var(--text); }
+        .popup-tab.active {
+            background: linear-gradient(180deg, rgba(229,57,53,0.35), rgba(229,57,53,0.12));
+            color: #fff;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
+        }
+
+        .popup-tab-panel {
+            display: none;
+            margin-top: 12px;
+            animation: panelIn 0.18s ease;
+        }
+        .popup-tab-panel.active { display: block; }
+        @keyframes panelIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .popup-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        .popup-card-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            margin: 0 0 10px;
+        }
+
+        button.popup-btn {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: linear-gradient(180deg, #383e4c, #2a303c);
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.05s, border-color 0.15s;
+            margin-bottom: 6px;
+        }
+        button.popup-btn:last-child { margin-bottom: 0; }
+        button.popup-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            background: linear-gradient(180deg, #424957, #313742);
+        }
+        button.popup-btn:active { transform: scale(0.985); }
+
+        button.popup-btn--primary {
+            background: linear-gradient(180deg, #43a047, #2e7d32);
+            border-color: #1b5e20;
+        }
+        button.popup-btn--primary:hover {
+            background: linear-gradient(180deg, #4caf50, #388e3c);
+        }
+        button.popup-btn--danger {
+            background: linear-gradient(180deg, #c62828, #8e0000);
+            border-color: #b71c1c;
+        }
+        button.popup-btn--danger:hover {
+            background: linear-gradient(180deg, #d32f2f, #b71c1c);
+        }
+        button.popup-btn--muted {
+            background: #2a2f38;
+            font-weight: 500;
+        }
+
+        .popup-debug-btn.popup-debug-btn--recording {
+            animation: dbgPulse 1.4s ease-in-out infinite;
+            border-color: #f06292 !important;
+            background: linear-gradient(180deg, #ad1457, #880e4f) !important;
+        }
+        @keyframes dbgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        /* Metin alanları — tarayıcı varsayılanı (beyaz) yerine panel teması */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="url"],
+        input[type="search"],
+        input.popup-input,
+        textarea.popup-input,
+        select.popup-input {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, #1e242e 0%, #151920 100%);
+            color: var(--text);
+            font-size: 12px;
+            font-family: inherit;
+            line-height: 1.4;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+            caret-color: var(--accent);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        textarea.popup-input {
+            min-height: 2.5em;
+        }
+        input.popup-input::placeholder,
+        textarea.popup-input::placeholder,
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="url"]::placeholder {
+            color: #6d7582;
+            opacity: 1;
+        }
+        input.popup-input:hover,
+        textarea.popup-input:hover,
+        select.popup-input:hover,
+        input[type="text"]:hover,
+        input[type="number"]:hover,
+        input[type="email"]:hover,
+        input[type="url"]:hover,
+        input[type="search"]:hover {
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+        input.popup-input:focus,
+        textarea.popup-input:focus,
+        select.popup-input:focus,
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="url"]:focus,
+        input[type="search"]:focus {
+            outline: none;
+            border-color: rgba(229, 57, 53, 0.42);
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.45),
+                0 0 0 2px rgba(229, 57, 53, 0.12);
+        }
+        select.popup-input {
+            cursor: pointer;
+            appearance: none;
+            background-color: #151920;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b929e' d='M1 1.5L6 6l5-4.5'/%3E%3C/svg%3E"),
+                linear-gradient(180deg, #1e242e 0%, #151920 100%);
+            background-repeat: no-repeat, no-repeat;
+            background-position: right 10px center, 0 0;
+            background-size: 12px 8px, 100% 100%;
+            padding-right: 30px;
+        }
+        input.popup-input:-webkit-autofill,
+        input.popup-input:-webkit-autofill:hover,
+        input.popup-input:-webkit-autofill:focus,
+        textarea.popup-input:-webkit-autofill,
+        textarea.popup-input:-webkit-autofill:hover,
+        textarea.popup-input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--text);
+            transition: background-color 99999s ease-out;
+            box-shadow: inset 0 0 0 100px #151920, inset 0 1px 3px rgba(0, 0, 0, 0.45);
+        }
+        input[type="range"] { width: 100%; accent-color: var(--accent); margin: 4px 0; }
+
+        .popup-note {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.45;
+            margin-top: 6px;
+        }
+
+        /* Switch */
+        .bugi-setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .bugi-setting-row:last-of-type { border-bottom: 0; padding-bottom: 0; }
+        .bugi-setting-row:first-child { padding-top: 4px; }
+        .bugi-setting-text .bugi-setting-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .bugi-setting-text .power-status.on { color: var(--ok); font-size: 12px; font-weight: 600; }
+        .bugi-setting-text .power-status.off { color: var(--danger); font-size: 12px; font-weight: 600; }
+
+        label.bugi-switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        label.bugi-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        label.bugi-switch span.bugi-switch-knob {
+            position: absolute;
+            inset: 0;
+            background: #3a414d;
+            border-radius: 13px;
+            transition: background 0.2s;
+            border: 1px solid var(--border);
+        }
+        label.bugi-switch span.bugi-switch-knob::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+            transition: transform 0.2s;
+        }
+        label.bugi-switch input:checked + span.bugi-switch-knob {
+            background: linear-gradient(90deg, #e53935, #c62828);
+            border-color: rgba(229,57,53,0.5);
+        }
+        label.bugi-switch input:checked + span.bugi-switch-knob::before {
+            transform: translate(18px, -50%);
+        }
+        label.bugi-switch input:focus-visible + span.bugi-switch-knob {
+            outline: 2px solid rgba(229,57,53,0.6);
+            outline-offset: 2px;
+        }
+
+        .popup-dev-hidden { display: none !important; }
+
+        .popup-media-row { display: flex; gap: 4px; align-items: stretch; width: 100%; margin-bottom: 6px; }
+        .popup-media-row > button.popup-btn--primary { margin-bottom: 0 !important; }
+        .popup-media-row .btn-success.popup-preview-eye,
+        .popup-media-row button.popup-preview-eye {
+            flex: 0 0 36px !important;
+            width: 36px !important;
+            min-width: 36px !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #blacklist-container, #video-list-container {
+            margin-top: 8px;
+            max-height: 160px;
+            overflow-y: auto;
+            background: #14171d;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        #video-list-container {
+            margin-top: 0;
+        }
+        #video-list-container:empty {
+            display: none !important;
+        }
+        #video-list-container:not(:empty) {
+            display: block !important;
+        }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+        }
+        .remove-btn {
+            background: none !important;
+            border: none !important;
+            color: var(--danger) !important;
+            cursor: pointer;
+            width: auto !important;
+            padding: 2px 6px !important;
+            font-weight: bold;
+        }
+        .status-msg {
+            margin-top: 6px;
+            color: var(--ok);
+            font-size: 11px;
+            display: none;
+        }
+
+        .experimental-box {
+            border: 1px dashed rgba(243,156,18,0.45);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(243,156,18,0.06);
+        }
+        .dev-info { display: none; font-size: 10px; color: #b0bec5; margin-top: 4px; word-break: break-all; }
+        body.dev-mode-on .dev-info { display: block; }
+
+        #video-list-placeholder {
+            color: var(--muted);
+            font-style: italic;
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+        }
+
+        .popup-schema-list {
+            list-style: none;
+            margin: 8px 0 0;
+            padding: 0;
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 11px;
+        }
+        .popup-schema-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .popup-schema-list .popup-schema-remove {
+            width: auto;
+            margin: 0;
+            padding: 4px 10px;
+            font-size: 10px;
+        }
+
+        .update-banner {
+            display: none;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,111,97,0.45);
+            background: rgba(58,19,16,0.95);
+            color: #ffd7d2;
+        }
+        .update-banner.show { display: block; }
+        .update-banner-title { font-weight: 700; margin-bottom: 4px; color: #ff8a80; }
+        .update-banner-actions { display: flex; gap: 6px; margin-top: 8px; }
+        .update-banner-actions button { margin: 0; }
+
+        .blocked-site-banner {
+            display: none;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 183, 77, 0.45);
+            background: rgba(66, 44, 18, 0.95);
+            color: #ffe0b2;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .blocked-site-banner.show { display: block; }
+
+        .legal-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.78);
+            padding: 12px;
+        }
+        .legal-modal-backdrop.show { display: flex; }
+        .legal-modal {
+            width: 100%;
+            max-height: 88vh;
+            overflow: auto;
+            background: #17191f;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.55);
+        }
+        .legal-modal h4 { margin: 0 0 10px 0; color: #ff8a80; }
+        .legal-links { display:flex; gap:6px; margin-bottom:8px; }
+        .legal-links button { margin:0; flex: 1; }
+        .legal-scroll {
+            white-space: pre-wrap;
+            font-size: 11px;
+            line-height: 1.45;
+            background: #0f1218;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 36vh;
+            overflow: auto;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+        .legal-switch-row {
+            margin-bottom: 12px;
+        }
+        .legal-switch-row:last-of-type { margin-bottom: 14px; }
+        .legal-footer-links {
+            text-align: center;
+            padding: 10px 0 4px;
+            font-size: 11px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            margin-top: 6px;
+        }
+        .legal-footer-links a { color: #90caf9; text-decoration: none; margin: 0 8px; }
+        .legal-footer-links a:hover { text-decoration: underline; }
+
+        .btn-row-2 {
+            display: flex;
+            gap: 6px;
+        }
+        .btn-row-2 button { flex: 1; margin-bottom: 0; }
+        .conc-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .conc-row input { margin-bottom: 0; flex: 1; min-width: 0; }
+        .conc-row button { margin: 0; width: auto; flex-shrink: 0; padding: 8px 12px; }
+
+        button.popup-btn-mini {
+            padding: 6px 8px !important;
+            font-size: 11px !important;
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        button.btn-success,
+        .popup-media-row .btn-success {
+            width: 100%;
+            display: block;
+            flex: 1;
+            min-width: 0;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #1b5e20;
+            background: linear-gradient(180deg, #43a047, #2e7d32);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 0 !important;
+        }
+        button.btn-success:hover {
+            background: linear-gradient(180deg, #4caf50, #388e3c);
+        }
+        button.popup-preview-eye.btn-success {
+            flex: 0 0 36px !important;
+            width: 36px !important;
+            min-width: 36px !important;
+            padding: 0 !important;
+        }
+
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            margin: 10px 0 6px;
+        }
+        .dev-hint { display: none; }
+        body.dev-mode-on .dev-hint { display: inline; }
+
+        input[type="password"].popup-input-secret {
+            font-family: ui-monospace, monospace;
+            letter-spacing: 0.06em;
+        }
+    </style>
+</head>
+<body>
+    <div id="legal-modal-backdrop" class="legal-modal-backdrop">
+        <div class="legal-modal">
+            <h4 data-i18n="legal.title">Terms of use and disclaimer</h4>
+            <div class="legal-links">
+                <button type="button" class="popup-btn" id="legal-open-terms" data-i18n="legal.btnTerms">Terms</button>
+                <button type="button" class="popup-btn" id="legal-open-privacy" data-i18n="legal.btnPrivacy">Privacy</button>
+            </div>
+            <div id="legal-text" class="legal-scroll"></div>
+
+            <div class="legal-switch-row bugi-setting-row" style="border:0;padding:12px;background:#14171d;border-radius:8px;">
+                <div class="bugi-setting-text">
+                    <div class="bugi-setting-title" style="font-size:12px;" data-i18n="legal.acceptTerms">I have read the terms</div>
+                </div>
+                <label class="bugi-switch">
+                    <input type="checkbox" id="legal-accept-terms-checkbox">
+                    <span class="bugi-switch-knob"></span>
+                </label>
+            </div>
+            <div class="legal-switch-row bugi-setting-row" style="border:0;padding:12px;background:#14171d;border-radius:8px;">
+                <div class="bugi-setting-text">
+                    <div class="bugi-setting-title" style="font-size:12px;" data-i18n="legal.acceptPrivacy">I have read the privacy policy</div>
+                </div>
+                <label class="bugi-switch">
+                    <input type="checkbox" id="legal-accept-privacy-checkbox">
+                    <span class="bugi-switch-knob"></span>
+                </label>
+            </div>
+
+            <div class="btn-row-2">
+                <button type="button" id="legal-accept-btn" class="popup-btn popup-btn--primary" data-i18n="legal.btnAccept">Accept</button>
+                <button type="button" id="legal-decline-btn" class="popup-btn popup-btn--danger" data-i18n="legal.btnDecline">Decline</button>
+            </div>
+            <div class="popup-note" data-i18n="legal.noteFooter">Acceptance required for downloads.</div>
+        </div>
+    </div>
+
+    <div class="popup-shell">
+        <div id="update-banner" class="update-banner">
+            <div class="update-banner-title" data-i18n="update.title">Update</div>
+            <div id="update-banner-message" data-i18n="update.defaultMsg">Download update.</div>
+            <div class="update-banner-actions">
+                <button id="update-download-btn" class="popup-btn popup-btn--danger popup-btn-mini" data-i18n="update.download">Download</button>
+                <button id="update-refresh-btn" class="popup-btn popup-btn-mini" data-i18n="update.check">Check again</button>
+            </div>
+        </div>
+        <div id="blocked-site-banner" class="blocked-site-banner" data-i18n="popup.blockedSiteNotice">
+            Sorry, our extension cannot be used on this site. Thank you for your understanding.
+        </div>
+
+        <header class="popup-header">
+            <div class="popup-header-row">
+                <h1 class="popup-brand"><span data-i18n="popup.brandMain">Bugi</span> <span class="brand-accent" data-i18n="popup.brandSub">Downloader</span></h1>
+
+            </div>
+            <nav class="popup-tabs" role="tablist">
+                <button type="button" class="popup-tab active" role="tab" aria-selected="true" data-popup-tab="media" data-i18n="popup.tabMedia">Media</button>
+                <button type="button" class="popup-tab" role="tab" aria-selected="false" data-popup-tab="settings" data-i18n="popup.tabSettings">Settings</button>
+            </nav>
+        </header>
+
+        <!-- Sayfa 1: Yakalanan medya -->
+        <section id="panel-media" class="popup-tab-panel active" role="tabpanel">
+            <div class="popup-card" id="main-content-section">
+                <div class="popup-card-title" data-i18n="media.cardTitle">Videos</div>
+                <div id="video-list-placeholder" data-i18n="media.placeholderNone">None</div>
+                <div id="video-list-container"></div>
+                <div id="media-extra-container"></div>
+                <button type="button" id="btn-clear-media" class="popup-btn popup-btn--danger" data-i18n="media.clearList">Clear</button>
+                <div class="popup-note" data-i18n="media.clearHint">Hint</div>
+            </div>
+
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="media.externalTitle">External</div>
+                <input type="text" id="custom-master-url" data-i18n-placeholder="media.externalPlaceholder" placeholder="https://...">
+                <button type="button" id="btn-download-custom-url" class="popup-btn popup-btn--primary" style="margin-top:8px;" data-i18n="media.externalDownload">Download</button>
+                <div class="popup-note" data-i18n="media.externalNote">Note</div>
+            </div>
+
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="media.dmTitle">Manager</div>
+                <button type="button" id="btn-open-download-manager" class="popup-btn popup-btn--primary" data-i18n="media.dmOpen">Open</button>
+                <div class="popup-note" data-i18n="media.dmNote">Note</div>
+            </div>
+        </section>
+
+        <!-- Sayfa 2: Ayarlar -->
+        <section id="panel-settings" class="popup-tab-panel" role="tabpanel" hidden>
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="settings.general">General</div>
+                <div class="bugi-setting-row">
+                    <div class="bugi-setting-text">
+                        <p class="bugi-setting-title" data-i18n="settings.extension">Extension</p>
+                        <p id="main-power-text" class="power-status on" data-i18n="settings.extensionOn">On</p>
+                    </div>
+                    <label class="bugi-switch">
+                        <input type="checkbox" id="main-power-checkbox">
+                        <span class="bugi-switch-knob"></span>
+                    </label>
+                </div>
+                <div class="bugi-setting-row">
+                    <div class="bugi-setting-text">
+                        <p class="bugi-setting-title" data-i18n="settings.devTitle">Developer</p>
+                        <p style="margin:4px 0 0;font-size:11px;color:var(--muted);" data-i18n="settings.devHint">Hint</p>
+                    </div>
+                    <label class="bugi-switch">
+                        <input type="checkbox" id="dev-mode-checkbox">
+                        <span class="bugi-switch-knob"></span>
+                    </label>
+                </div>
+                <div class="bugi-setting-row">
+                    <div class="bugi-setting-text">
+                        <p class="bugi-setting-title" data-i18n="settings.forceHuntTitle">Force scan</p>
+                        <p style="margin:4px 0 0;font-size:11px;color:var(--muted);" data-i18n="settings.forceHuntHint">Hint</p>
+                    </div>
+                    <label class="bugi-switch">
+                        <input type="checkbox" id="force-video-hunt-checkbox">
+                        <span class="bugi-switch-knob"></span>
+                    </label>
+                </div>
+                <div class="bugi-setting-row">
+                    <div class="bugi-setting-text">
+                        <p class="bugi-setting-title" data-i18n="settings.langTitle">Language</p>
+                        <p style="margin:4px 0 0;font-size:11px;color:var(--muted);" data-i18n="settings.langHint">Reload hint</p>
+                    </div>
+                    <select id="ui-locale-select" class="popup-input" style="max-width:200px;flex-shrink:0;"></select>
+                </div>
+            </div>
+
+            <div id="popup-settings-developer" class="popup-card popup-dev-hidden">
+                <div class="popup-card-title" data-i18n="settings.devSection">Developer</div>
+                <div id="popup-dev-debug-block">
+                    <button type="button" id="btn-debug-log" class="popup-btn popup-debug-btn" data-i18n="settings.debugStart">Log</button>
+                    <div class="popup-note" data-i18n="settings.debugNote">Note</div>
+                </div>
+
+                <div id="popup-dev-schema-block" style="margin-top:12px;">
+                    <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;" data-i18n="settings.schemaProfile">Schema</div>
+                    <button type="button" id="popup-schema-pick" class="popup-btn" data-i18n="settings.schemaPick">Pick</button>
+                    <input type="file" id="popup-schema-file" accept=".json,application/json" multiple style="display:none">
+                    <ul id="popup-schema-list" class="popup-schema-list"></ul>
+                </div>
+
+                <div id="popup-dev-concurrency-block" style="margin-top:12px;">
+                    <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;" data-i18n="settings.concurrency">Concurrency</div>
+                    <div class="experimental-box">
+                        <div class="conc-row">
+                            <input type="number" id="concurrency-input" min="1" max="32" value="8">
+                            <button type="button" id="btn-save-concurrency" class="popup-btn popup-btn-mini" style="width:auto;" data-i18n="settings.save">Save</button>
+                        </div>
+                        <div class="status-msg" id="concurrency-msg" data-i18n="settings.saved">Saved</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="settings.notifTitle">Sound</div>
+                <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:4px;" data-i18n="settings.notifSound">Sound</label>
+                <select id="notif-sound-select" class="popup-input"></select>
+                <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:4px;margin-top:8px;" data-i18n="settings.notifLevel">Level</label>
+                <input id="notif-volume" type="range" min="0" max="100" value="80">
+                <div class="btn-row-2" style="margin-top:10px;">
+                    <button type="button" id="notif-test-btn" class="popup-btn popup-btn-mini" data-i18n="settings.notifTest">Test</button>
+                    <button type="button" id="notif-add-btn" class="popup-btn popup-btn-mini" data-i18n="settings.notifAdd">Add</button>
+                    <button type="button" id="notif-remove-btn" class="popup-btn popup-btn-mini" data-i18n="settings.notifRemove">Remove</button>
+                </div>
+                <div class="popup-note" data-i18n="settings.notifNote">Note</div>
+            </div>
+
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="settings.blockTitle">Block</div>
+                <div class="btn-row-2">
+                    <button type="button" id="btn-add-site" class="popup-btn popup-btn--danger" data-i18n="settings.blockThis">Block</button>
+                    <button type="button" id="btn-show-list" class="popup-btn" data-i18n="settings.blockList">List</button>
+                </div>
+                <div id="blacklist-msg" class="status-msg" data-i18n="settings.blockSaved">Saved</div>
+                <div id="blacklist-container"></div>
+            </div>
+
+            <div class="popup-card">
+                <div class="popup-card-title" data-i18n="settings.bugTitle">Bug</div>
+                <div class="bugi-setting-row" style="border-bottom: none; padding-bottom: 4px;">
+                    <div class="bugi-setting-text">
+                        <p class="bugi-setting-title" data-i18n="settings.bugCookies">Cookies</p>
+                        <p style="margin:4px 0 0;font-size:11px;color:var(--muted);" data-i18n="settings.bugCookiesHint">Hint</p>
+                    </div>
+                    <label class="bugi-switch">
+                        <input type="checkbox" id="report-include-cookies-checkbox" checked>
+                        <span class="bugi-switch-knob"></span>
+                    </label>
+                </div>
+                <div class="popup-note" style="margin-bottom:0;" data-i18n="settings.bugNote">Note</div>
+            </div>
+
+            <div class="legal-footer-links">
+                <a href="legal-terms.html" target="_blank" data-i18n="settings.linkTerms">Terms</a>
+                <a href="privacy-policy.html" target="_blank" data-i18n="settings.linkPrivacy">Privacy</a>
+            </div>
+        </section>
+    </div>
+
+
+    <script src="json-import-profiles-shared.js"></script>
+    <script src="i18n.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

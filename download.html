@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="dm.pageTitle">Bugi Download Manager</title>
+    <link rel="stylesheet" href="idm.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: #151515;
+            color: #f5f5f5;
+            user-select: none;
+        }
+        .header {
+            padding: 14px 22px;
+            background: linear-gradient(135deg, #d32f2f, #7b1fa2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .header-sub {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        .container {
+            padding: 16px 22px 22px;
+        }
+        .top-row {
+            display:flex;
+            justify-content: space-between;
+            align-items:center;
+            margin-bottom:10px;
+            font-size:11px;
+            color:#bbb;
+            gap:12px;
+        }
+        .lists-wrapper {
+            display:flex;
+            gap:16px;
+            align-items:flex-start;
+        }
+        .column {
+            flex:1;
+            min-width:0;
+        }
+        .column-header {
+            font-size:12px;
+            font-weight:600;
+            margin-bottom:6px;
+            color:#ccc;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        .column-header-right {
+            display:flex;
+            gap:6px;
+            align-items:center;
+            font-size:11px;
+        }
+        .sort-toggle {
+            cursor:pointer;
+            font-size:11px;
+            color:#777;
+            padding:2px 4px;
+            border-radius:4px;
+        }
+        .sort-toggle:hover {
+            background:#333;
+            color:#fff;
+        }
+        .clear-btn {
+            cursor:pointer;
+            font-size:10px;
+            color:#f44336;
+            padding:2px 6px;
+            border-radius:4px;
+            border:1px solid #555;
+            background:#222;
+        }
+        .clear-btn:hover {
+            background:#422;
+        }
+        .search-input {
+            background:#111;
+            border:1px solid #444;
+            color:#f5f5f5;
+            padding:4px 8px;
+            border-radius:4px;
+            font-size:11px;
+            width:200px;
+        }
+        .search-input::placeholder {
+            color:#777;
+        }
+        .empty-state {
+            margin-top: 40px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+        }
+        .job-card {
+            background: #1f1f1f;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .job-title {
+            font-size: 14px;
+            font-weight: 600;
+            user-select:text;
+        }
+        .job-meta {
+            font-size: 11px;
+            color: #aaa;
+            user-select:text;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-queued { background:#424242; color:#fff; }
+        .badge-downloading { background:#1976d2; color:#fff; }
+        .badge-completed { background:#2e7d32; color:#fff; }
+        .badge-error { background:#c62828; color:#fff; }
+        .badge-cancelled { background:#616161; color:#fff; }
+        .progress-bar {
+            position: relative;
+            height: 6px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #333;
+            margin: 6px 0 4px;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            transition: width 0.2s ease-out;
+        }
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            margin-top: 4px;
+            color: #bbb;
+        }
+        .job-actions button {
+            background: #333;
+            border: 1px solid #555;
+            color: #eee;
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 4px;
+        }
+        .job-actions button:hover {
+            background: #444;
+        }
+        .job-actions .job-btn-retry {
+            background: #d32f2f;
+            color: white;
+            padding: 6px 12px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
+            height: 28px;
+        }
+        .job-actions .job-btn-retry:hover {
+            background: #b71c1c;
+        }
+        a.source-link {
+            color: #90caf9;
+            text-decoration: none;
+        }
+        a.source-link:hover {
+            text-decoration: underline;
+        }
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index: 9999;
+        }
+        .modal {
+            background:#202020;
+            border-radius:8px;
+            padding:14px 16px 12px;
+            min-width:320px;
+            max-width:420px;
+            box-shadow:0 6px 18px rgba(0,0,0,0.7);
+            border:1px solid #444;
+            font-size:12px;
+        }
+        .modal-title {
+            font-size:14px;
+            font-weight:600;
+            margin-bottom:6px;
+        }
+        .modal-sub {
+            font-size:11px;
+            color:#bbb;
+            margin-bottom:8px;
+        }
+        .modal-row {
+            display:flex;
+            align-items:center;
+            gap:6px;
+            margin-bottom:6px;
+            font-size:11px;
+        }
+        .modal-row label {
+            min-width:70px;
+            color:#ccc;
+        }
+        .modal-row input {
+            flex:1;
+            background:#111;
+            border:1px solid #444;
+            color:#f5f5f5;
+            padding:3px 6px;
+            border-radius:4px;
+            font-size:11px;
+        }
+        .modal-actions {
+            display:flex;
+            justify-content:flex-end;
+            gap:6px;
+            margin-top:8px;
+        }
+        .modal-actions button {
+            background:#333;
+            border:1px solid #555;
+            color:#eee;
+            padding:4px 10px;
+            font-size:11px;
+            border-radius:4px;
+            cursor:pointer;
+        }
+        .modal-actions button.primary {
+            background:#1976d2;
+            border-color:#1e88e5;
+        }
+        .json-drop-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.62);
+            border: 2px dashed #64b5f6;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .json-drop-overlay.active {
+            display: flex;
+        }
+        .json-drop-box {
+            background: #1d1d1d;
+            border: 1px solid #3b6ea5;
+            border-radius: 10px;
+            padding: 18px 24px;
+            font-size: 13px;
+            color: #d8ecff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+        .dm-legal-footer {
+            padding: 12px 22px 18px;
+            border-top: 1px solid #2c2c2c;
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .dm-legal-footer a {
+            color: #90caf9;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .dm-legal-footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <div class="header-title" data-i18n="dm.headerTitle">Bugi Download Manager</div>
+            <div class="header-sub" data-i18n="dm.headerSub">Your download queue stays here even when tabs close.</div>
+        </div>
+        <div class="header-right">
+            <div id="summary-total">Total: 0 downloads</div>
+            <div id="summary-active">Active: 0</div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="dm-bg-throttle-hint" style="display:none; background:#2a2410; border:1px solid #6d5c20; color:#ffe082; padding:8px 12px; font-size:11px; margin-bottom:12px; border-radius:4px; line-height:1.45;" data-i18n="dm.bgThrottleHint">
+            When this window is in the background, Chrome may throttle download speed. Keep Download Manager in the foreground, pin it, or place it on another screen for full speed.
+        </div>
+        <div class="top-row">
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="checkbox" id="fixed-dir-checkbox" style="margin:0;">
+                <span data-i18n="dm.fixedDirCheckbox">Auto-save to the same folder (for this session)</span>
+            </label>
+            <div style="flex:1;"></div>
+            <input id="search-input" class="search-input" type="text" data-i18n-placeholder="dm.searchPlaceholder" placeholder="Search completed (name, link, size, date)">
+            <span id="fixed-dir-label" style="font-size:11px; color:#888;"></span>
+        </div>
+        <div class="lists-wrapper">
+            <div class="column">
+                <div class="column-header">
+                    <span data-i18n="dm.colCompleted">Completed</span>
+                    <div class="column-header-right">
+                        <span id="completed-sort-toggle" class="sort-toggle" data-i18n-title="dm.sortCompletedTitle" title="Sort by completion date">⇅</span>
+                        <button id="completed-clear" class="clear-btn" data-i18n-title="dm.clearCompletedTitle" data-i18n="dm.clearCompletedBtn" title="Clear all completed">Clear all</button>
+                    </div>
+                </div>
+                <div id="completed-empty" class="empty-state" data-i18n="dm.emptyCompleted">
+                    No completed downloads yet.
+                </div>
+                <div id="downloads-left-list"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">
+                    <span data-i18n="dm.colPending">Queued / Active</span>
+                    <div class="column-header-right">
+                        <button id="pending-run-all" class="clear-btn" data-i18n-title="dm.runAllTitle" data-i18n="dm.runAllBtn" title="Download all queued in order">Download all in order</button>
+                        <span id="pending-sort-toggle" class="sort-toggle" data-i18n-title="dm.sortPendingTitle" title="Sort by added date">⇅</span>
+                        <button id="pending-clear" class="clear-btn" data-i18n-title="dm.clearPendingTitle" data-i18n="dm.clearPendingBtn" title="Clear all queued/active">Clear all</button>
+                    </div>
+                </div>
+                <div id="pending-empty" class="empty-state" data-i18n-html="1" data-i18n="dm.emptyPendingHtml">
+                    No pending downloads yet.<br>Start from a video or dubbing menu with Download.
+                </div>
+                <div id="downloads-right-list"></div>
+            </div>
+        </div>
+    </div>
+    <div class="dm-legal-footer">
+        <a id="dm-link-terms" href="legal-terms.html" target="_blank">Terms</a>
+        |
+        <a id="dm-link-privacy" href="privacy-policy.html" target="_blank">Privacy</a>
+    </div>
+    <div id="json-drop-overlay" class="json-drop-overlay" aria-hidden="true">
+        <div class="json-drop-box" data-i18n="dm.jsonDropHint">Drop a .json file anywhere in this window (schema profile: extension popup)</div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        void (async function () {
+            try {
+                if (typeof BugiI18n !== "undefined" && BugiI18n.initFromStorage) {
+                    await BugiI18n.initFromStorage();
+                    if (BugiI18n.applyDom) BugiI18n.applyDom(document.documentElement);
+                }
+            } catch (_e) {}
+            var t = document.getElementById("dm-link-terms");
+            var p = document.getElementById("dm-link-privacy");
+            if (t && typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL) {
+                t.href = chrome.runtime.getURL("legal-terms.html");
+                if (typeof BugiI18n !== "undefined" && BugiI18n.t) t.textContent = BugiI18n.t("dm.footerTerms");
+            }
+            if (p && typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL) {
+                p.href = chrome.runtime.getURL("privacy-policy.html");
+                if (typeof BugiI18n !== "undefined" && BugiI18n.t) p.textContent = BugiI18n.t("dm.footerPrivacy");
+            }
+        })();
+    });
+    </script>
+    <script src="download.js"></script>
+    <script src="json-import-profiles-shared.js"></script>
+    <script src="json-import.js"></script>
+</body>
+</html>
+

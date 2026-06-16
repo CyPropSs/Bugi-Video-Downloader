@@ -1,0 +1,76 @@
+{
+  "terms": {
+    "documentTitle": "Bugi Video Downloader — Terms of Use",
+    "h1": "Bugi Video Downloader — Terms of Use",
+    "effective": "Effective date: 1 May 2026",
+    "sections": [
+      {
+        "title": "1. General terms",
+        "html": "<p>Anyone who installs or uses this extension is deemed to have read and accepted these terms. If you do not agree, you must not use the extension and should remove it.</p>"
+      },
+      {
+        "title": "2. Lawful use obligation",
+        "html": "<ul><li>The extension is offered only for lawful purposes.</li><li>You may download only content that you are legally entitled to download.</li><li>Compliance with copyright, licences, platform rules and applicable local law is entirely your responsibility.</li></ul>"
+      },
+      {
+        "title": "3. Prohibited use",
+        "html": "<ul><li>Unauthorized downloading, redistribution or commercial use of content.</li><li>Use of the extension in a way that infringes copyright or other rights.</li><li>Abuse aimed at circumventing platform security or terms of service.</li></ul>"
+      },
+      {
+        "title": "4. Disclaimer of liability",
+        "html": "<p>The extension is provided <strong>as is</strong>. The developer does not warrant uninterrupted operation, compatibility with every site, fitness for a particular purpose or error-free behaviour.</p><p>Any consequences of your use—including copyright claims, account restrictions, data loss, loss of revenue, and direct or indirect damages—are solely your responsibility.</p>"
+      },
+      {
+        "title": "5. Third-party services",
+        "html": "<p>The extension may interact with third-party websites. Their content, technical changes and policies are outside the developer’s control.</p>"
+      },
+      {
+        "title": "6. Cookies and optional bug reporting",
+        "html": "<p>Optional bug reporting may send a description and technical summary to a developer-controlled endpoint over HTTPS.</p><p>When the relevant setting is enabled, <strong>cookie names and values</strong> from the active tab context may be included in the report. Cookies may contain session, authentication or access-sensitive data.</p><ul><li>Sending a report is entirely your choice.</li><li>You can disable including cookies so they are not sent.</li><li>All risks—including misuse by third parties—are yours if you choose to send a report with cookies enabled.</li></ul>"
+      },
+      {
+        "title": "7. Changes to these terms",
+        "html": "<p>The developer may update these terms. When updated terms take effect, you may be asked to accept them again inside the extension.</p>"
+      },
+      {
+        "title": "8. Statement of acceptance",
+        "html": "<p>By using this extension you state that you have read, understood and accept the terms above.</p>"
+      }
+    ]
+  },
+  "privacy": {
+    "documentTitle": "Bugi Video Downloader — Privacy Policy",
+    "h1": "Bugi Video Downloader — Privacy Policy",
+    "effective": "Effective date: 1 May 2026",
+    "sections": [
+      {
+        "title": "1. Data collected",
+        "html": "<p>To provide its features, the extension may store the following locally on your device:</p><ul><li>Preferences (settings, blocked-site list, notification sound choices, include-cookies-in-report option)</li><li>Download job list and related technical metadata</li><li>Debug/log records (only when you enable logging)</li><li>Whether you have accepted the terms of use</li><li>When you send an optional bug report: your description; the generated technical summary (tab URL, detected media URL summaries, etc.); and if enabled, a <strong>cookie name/value list</strong></li></ul>"
+      },
+      {
+        "title": "2. Where data is stored",
+        "html": "<p>Preferences and download state are kept in the browser’s extension storage (local storage).</p><p>The extension does not automatically collect personal data or cookie lists and send them to a remote server. Data is sent to an external address only when you start the <strong>bug report</strong> flow and a request is actually sent.</p>"
+      },
+      {
+        "title": "3. Cookies and the cookies permission",
+        "html": "<p>The extension manifest may include a <strong>cookies</strong> permission. It is used only when you submit a bug report and the setting to include cookies in the report is on: cookie strings read via the browser’s cookies API for the relevant site URL may be attached to the report payload.</p><p>Cookies may contain session, sign-in, preference or security-related information. You can turn off including cookies and send only the description and a cookie-free technical summary.</p><p>Report contents are sent over HTTPS to the bug-report endpoint. Retention, access and security practices on the receiving side are determined by that service’s operator.</p>"
+      },
+      {
+        "title": "4. Network activity",
+        "html": "<p>The extension may perform network requests as part of download flows you trigger, optional bug reports, and update checks. Target servers may log those requests according to their own policies.</p>"
+      },
+      {
+        "title": "5. Third-party sites",
+        "html": "<p>Data practices on third-party sites are outside this policy. You should review each site’s own privacy terms separately.</p>"
+      },
+      {
+        "title": "6. Data security",
+        "html": "<p>The developer aims to apply reasonable technical measures; however, no absolute security can be guaranteed on the internet or in software ecosystems.</p>"
+      },
+      {
+        "title": "7. Policy updates",
+        "html": "<p>This privacy policy may be updated from time to time. The current version is published inside the extension.</p>"
+      }
+    ]
+  }
+}
