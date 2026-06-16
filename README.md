@@ -3,17 +3,7 @@
 Bugi Video Downloader is a powerful and simple browser extension that automatically detects media (video/audio) files on websites and allows you to download them. It specifically helps you detect and download videos in **HLS (m3u8)** and **MP4** formats.
 
 ## Screenshots 📸
-<p float="left">
-  <img src="screenshots/Screenshot_1.png" width="250" />
-  <img src="screenshots/Screenshot_2.png" width="250" />
-  <img src="screenshots/Screenshot_3.png" width="250" />
-  <img src="screenshots/Screenshot_4.png" width="250" />
-  <img src="screenshots/Screenshot_5.png" width="250" />
-  <img src="screenshots/Screenshot_6.png" width="250" />
-  <img src="screenshots/Screenshot_7.png" width="250" />
-  <img src="screenshots/Screenshot_9.png" width="250" />
-  <img src="screenshots/Screenshot_10.png" width="250" />
-</p>
+If you are curious about how the extension looks and works, please check out the [screenshots](./screenshots/) folder.
 
 ## Features ✨
 - **Automatic Detection:** Automatically detects media files being played or loaded on the web pages you visit in the background.
