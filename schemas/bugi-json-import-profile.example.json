@@ -1,7 +1,7 @@
 {
   "bugiJsonImportProfile": 2,
-  "id": "anizium",
-  "label": "Anizium API export",
+  "id": "sample-api",
+  "label": "Sample API export",
   "match": {
     "rootType": "object",
     "requiredKeys": ["episodes"]

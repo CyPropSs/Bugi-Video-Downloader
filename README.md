@@ -30,6 +30,7 @@ You can currently install this extension in developer mode (as an unpacked exten
 6. The extension will be installed, and its icon will appear in your browser's toolbar! 🎉
 
 ## How to Use 🚀
+[![DEMO](https://img.youtube.com/vi/eA4E636OHfI/3.jpg)](https://www.youtube.com/watch?v=eA4E636OHfI)
 1. Go to a website and play the video you want to download.
 2. **On-page Download Button:** If a video is detected, a download button will automatically appear in the top-left corner of the video player itself. You don't have to use the popup menu to download!
 3. Alternatively, a small red/green notification dot on the extension icon indicates that a video has been detected on the page. Click the icon to see the list of detected videos.

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bugi-local/schemas/bugi-json-import-advanced-episodes.schema.json",
-  "title": "Bugi JSON içe aktarma — gelişmiş episodes (Anizium uyumlu)",
+  "title": "Bugi JSON içe aktarma — gelişmiş episodes",
   "description": "Kök nesne; episodes dizisi. x-bugi-extract ile alan yolları bu dosyada tanımlıdır; eklenti sadece modu yorumlar.",
   "type": "object",
   "x-bugi-extract": {
