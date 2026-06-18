@@ -19,7 +19,6 @@ If you are curious about how the extension looks and works, please check out the
 You can currently install this extension in developer mode (as an unpacked extension):
 
 1. Download this repository to your computer as a ZIP file and extract it, or clone it using `git clone`.
-   *(If you haven't already, you can safely delete the unused `mux.min.js` and `update-message.json` files from the folder before installation.)*
 2. Go to your browser's extensions page:
    - **Chrome / Brave:** Type `chrome://extensions/` in your address bar.
    - **Edge:** Type `edge://extensions/` in your address bar.
