@@ -249,15 +249,25 @@ class DiskStreamManagerDM {
             const isMp4 = String(this.suggestedName || "").toLowerCase().endsWith(".mp4");
             const blob = new Blob(this.fallbackChunks, { type: isMp4 ? "video/mp4" : "video/mp2t" });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = this.suggestedName;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                URL.revokeObjectURL(url);
-                a.remove();
-            }, 2000);
+            if (chrome.downloads && chrome.downloads.download) {
+                chrome.downloads.download({
+                    url: url,
+                    filename: this.suggestedName,
+                    saveAs: false
+                }, () => {
+                    setTimeout(() => URL.revokeObjectURL(url), 10000);
+                });
+            } else {
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = this.suggestedName;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    URL.revokeObjectURL(url);
+                    a.remove();
+                }, 2000);
+            }
         } else if (this.writable) {
             await this.writable.close();
         }
@@ -2375,29 +2385,53 @@ function dmOpenRangeUI(job, backdrop, parsedSegmentsData, selectedBw, meta, snap
 
 function dmAnalyzeSegments(text, baseUrl) {
     const lines = String(text || "").split(/\r?\n/);
-    const parsed = [];
-    let t = 0;
-    let count = 0;
+    let parts = [];
+    let currentPart = [];
     let initSegmentUrl = "";
+
     for (let i = 0; i < lines.length; i++) {
         const line = (lines[i] || "").trim();
         if (!initSegmentUrl && line.startsWith("#EXT-X-MAP:")) {
             initSegmentUrl = dmParseExtXMapUrl(line, baseUrl);
             continue;
         }
-        if (line.startsWith("#EXTINF:")) {
+        if (line === "#EXT-X-DISCONTINUITY") {
+            if (currentPart.length > 0) {
+                parts.push(currentPart);
+                currentPart = [];
+            }
+        } else if (line.startsWith("#EXTINF:")) {
             const durPart = line.split(":")[1];
             const dur = parseFloat(durPart ? durPart.replace(",", "") : 0);
             const url = lines[i + 1] ? lines[i + 1].trim() : "";
             if (url && !url.startsWith("#")) {
                 let fullUrl = url;
                 try { fullUrl = new URL(url, baseUrl).href; } catch (_e) {}
-                parsed.push({ url: fullUrl, startTime: t, endTime: t + dur, duration: dur, index: count++ });
-                t += dur;
+                currentPart.push({ url: fullUrl, duration: dur });
             }
         }
     }
-    // Array'a metadata ekle (minimum değişiklik için)
+    if (currentPart.length > 0) parts.push(currentPart);
+
+    let startIndex = 0;
+    for (let i = 0; i < parts.length - 1; i++) {
+        let partDur = parts[i].reduce((sum, seg) => sum + seg.duration, 0);
+        if (partDur < 60) {
+            startIndex = i + 1;
+        } else {
+            break;
+        }
+    }
+
+    const parsed = [];
+    let t = 0;
+    let count = 0;
+    for (let i = startIndex; i < parts.length; i++) {
+        for (let seg of parts[i]) {
+            parsed.push({ url: seg.url, startTime: t, endTime: t + seg.duration, duration: seg.duration, index: count++ });
+            t += seg.duration;
+        }
+    }
     parsed.initSegmentUrl = initSegmentUrl || "";
     return parsed;
 }

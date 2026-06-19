@@ -1661,15 +1661,19 @@ function parseMasterAndShowMenu(text, baseUrl, container) {
 }
 
 function analyzeSegments(text, baseUrl) {
-    const lines = text.split(/\r?\n/); 
-    parsedSegmentsData = [];
-    let t = 0;
-    let count = 0;
-
+    const lines = text.split(/\r?\n/);
+    let parts = [];
+    let currentPart = [];
+    
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
         
-        if (line.startsWith("#EXTINF:")) {
+        if (line === "#EXT-X-DISCONTINUITY") {
+            if (currentPart.length > 0) {
+                parts.push(currentPart);
+                currentPart = [];
+            }
+        } else if (line.startsWith("#EXTINF:")) {
             const durPart = line.split(":")[1];
             const dur = parseFloat(durPart ? durPart.replace(",", "") : 0);
             let url = lines[i + 1] ? lines[i + 1].trim() : "";
@@ -1677,18 +1681,41 @@ function analyzeSegments(text, baseUrl) {
             if (url && !url.startsWith("#")) {
                 try {
                      let fullUrl = new URL(url, baseUrl).href;
-                     parsedSegmentsData.push({
+                     currentPart.push({
                          url: fullUrl,
-                         startTime: t,
-                         endTime: t + dur,
-                         duration: dur,
-                         index: count++,
+                         duration: dur
                      });
-                     t += dur;
                 } catch(e) {
                      console.error("URL Hatası:", url);
                 }
             }
+        }
+    }
+    if (currentPart.length > 0) parts.push(currentPart);
+
+    let startIndex = 0;
+    for (let i = 0; i < parts.length - 1; i++) {
+        let partDur = parts[i].reduce((sum, seg) => sum + seg.duration, 0);
+        if (partDur < 60) {
+            startIndex = i + 1;
+        } else {
+            break;
+        }
+    }
+
+    parsedSegmentsData = [];
+    let t = 0;
+    let count = 0;
+    for (let i = startIndex; i < parts.length; i++) {
+        for (let seg of parts[i]) {
+            parsedSegmentsData.push({
+                url: seg.url,
+                startTime: t,
+                endTime: t + seg.duration,
+                duration: seg.duration,
+                index: count++
+            });
+            t += seg.duration;
         }
     }
 }

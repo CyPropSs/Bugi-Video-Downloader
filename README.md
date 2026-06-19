@@ -19,7 +19,6 @@ If you are curious about how the extension looks and works, please check out the
 You can currently install this extension in developer mode (as an unpacked extension):
 
 1. Download this repository to your computer as a ZIP file and extract it, or clone it using `git clone`.
-   *(If you haven't already, you can safely delete the unused `mux.min.js` and `update-message.json` files from the folder before installation.)*
 2. Go to your browser's extensions page:
    - **Chrome / Brave:** Type `chrome://extensions/` in your address bar.
    - **Edge:** Type `edge://extensions/` in your address bar.
@@ -30,7 +29,7 @@ You can currently install this extension in developer mode (as an unpacked exten
 6. The extension will be installed, and its icon will appear in your browser's toolbar! 🎉
 
 ## How to Use 🚀
-[![DEMO](https://img.youtube.com/vi/eA4E636OHfI/3.jpg)](https://www.youtube.com/watch?v=eA4E636OHfI)
+https://github.com/user-attachments/assets/b91e0d84-b201-4413-89af-1aaca0967ead
 1. Go to a website and play the video you want to download.
 2. **On-page Download Button:** If a video is detected, a download button will automatically appear in the top-left corner of the video player itself. You don't have to use the popup menu to download!
 3. Alternatively, a small red/green notification dot on the extension icon indicates that a video has been detected on the page. Click the icon to see the list of detected videos.
